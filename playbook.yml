@@ -4,3 +4,7 @@
   tasks:
     - name: add a new user
       user: name=kakeibo
+    - name: install nginx
+      apt: name=nginx state=latest
+    - name: start nginx and enbaled
+      service: name=nginx state=started enabled=yes
