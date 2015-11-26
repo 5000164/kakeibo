@@ -1,10 +1,22 @@
 ---
 - hosts: all
+  remote_user: vagrant
   sudo: yes
   tasks:
-    - name: add a new user
-      user: name=kakeibo
-    - name: install nginx
-      apt: name=nginx state=latest
-    - name: start nginx and enbaled
-      service: name=nginx state=started enabled=yes
+    - ping:
+    - user: name=kakeibo password=$1$SomeSalt$hgwu0g0i6rC6tadFj.71O0 # vagrant
+
+- hosts: all
+  remote_user: kakeibo
+  sudo: yes
+  tasks:
+    - apt: update_cache=yes
+    - apt: upgrade=dist
+    - apt: name=git state=latest
+    - apt: name=nginx state=latest
+    - service: name=nginx state=started enabled=yes
+
+- hosts: all
+  remote_user: kakeibo
+  tasks:
+    - git: repo=https://github.com/sstephenson/rbenv.git dest=~/.rbenv

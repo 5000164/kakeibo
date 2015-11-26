@@ -1,3 +1,5 @@
 [app]
-vagrant@127.0.0.1:2222
+127.0.0.1
 
+[all:vars]
+ansible_ssh_port=2222
