@@ -2,9 +2,13 @@
 - hosts: all
   remote_user: vagrant
   sudo: yes
+  vars:
+    user_name: kakeibo
+    password: $1$SomeSalt$NJLL5EW.dm2n.TNvuIVmq. # kakeibo
   tasks:
-    - ping:
-    - user: name=kakeibo password=$1$SomeSalt$hgwu0g0i6rC6tadFj.71O0 # vagrant
+    - user: name={{ user_name }} password={{ password }} groups={{ user_name }}
+    - lineinfile: dest=/etc/sudoers.d/{{ user_name }} line="{{ user_name }} ALL=(ALL) NOPASSWD:ALL" create=yes owner=root group=root mode=0440
+    - authorized_key: user={{ user_name }} key="{{ lookup('file', '/Users/hiroshi/.ssh/id_rsa.pub') }}"
 
 - hosts: all
   remote_user: kakeibo
