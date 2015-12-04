@@ -24,3 +24,6 @@
   remote_user: kakeibo
   tasks:
     - git: repo=https://github.com/sstephenson/rbenv.git dest=~/.rbenv
+    - lineinfile: dest={{ ansible_env.HOME }}/.bash_profile line="export PATH=\"$HOME/.rbenv/bin:$PATH\"" create=yes
+    - lineinfile: dest={{ ansible_env.HOME }}/.bash_profile line="eval \"$(rbenv init -)\"" create=yes
+    - git: repo=https://github.com/rbenv/ruby-build.git dest=~/.rbenv/plugins/ruby-build
